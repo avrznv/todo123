@@ -23,6 +23,21 @@ pipeline {
             }
         }
 
+        stage('Deploy to EC2') {
+            steps {
+                sshagent([SSH_KEY]) {
+                sh """
+                [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
+                ssh-keyscan -t rsa,dsa ${PUBLIC_DNS} >> ~/.ssh/known_hosts
+                scp -r docker-compose.yml ${USER}@${PUBLIC_DNS}:${DEPLOY_PATH}docker-compose.yml
+                ssh ${USER}@${PUBLIC_DNS} "cd ${DEPLOY_PATH} && \
+                docker-compose down && \
+                docker pull ${DOCKER_IMAGE} && \
+                docker-compose up -d"
+                """
+        }
+      }
+    }
       
     }
 }
