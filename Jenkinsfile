@@ -39,5 +39,21 @@ pipeline {
       }
     }
       
+
+        stage('Check') {
+        steps {
+            script {
+            def response = sh(script: """
+            curl -s -o /dev/null -w "%{http_code}" ${PUBLIC_DNS}:8000/todo
+            """, returnStdout: true)
+            if (response == '200') {
+                echo "Application is healthy"
+            } else {
+                echo "Application is not healthy. HTTP response code: ${response}"
+                //currentBuild.currentResult = 'UNSTABLE'
+            }
+            }
+        }
+        }
     }
 }
