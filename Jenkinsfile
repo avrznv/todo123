@@ -17,7 +17,6 @@ pipeline {
     //    stage('Build and Push Docker Image') {
     //         steps {
     //             //sh 'docker version'
-    //             //sh 'docker run hello-world'
     //             sh 'docker build -t $DOCKER_IMAGE .'
     //             withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
     //                 sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
@@ -32,9 +31,9 @@ pipeline {
                 sh """
                 scp -o StrictHostKeyChecking=no -r docker-compose.yml ${USER}@${PUBLIC_DNS}:${DEPLOY_PATH}docker-compose.yml
                 ssh -o StrictHostKeyChecking=no ${USER}@${PUBLIC_DNS} "cd ${DEPLOY_PATH} && \
-                docker-compose down && \
-                docker pull ${DOCKER_IMAGE} && \
-                docker-compose up -d"
+                sudo docker-compose down && \
+                sudo docker pull ${DOCKER_IMAGE} && \
+                sudo docker-compose up -d"
                 """
         }
       }
