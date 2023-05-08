@@ -5,6 +5,7 @@ pipeline {
         DOCKER_IMAGE = 'andreyrozanov/todo:latest'
         USER = 'ubuntu'
         DOCKERHUB_CREDENTIALS = 'andreyrozanov-dockerhub'
+        DOCKER_REGISTRY = 'https://index.docker.io/v1/'
   }
     
     
