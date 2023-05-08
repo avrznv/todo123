@@ -8,7 +8,7 @@ pipeline {
         DOCKER_REGISTRY = 'https://index.docker.io/v1/'
         SSH_KEY = 'aws-ssh'
         PUBLIC_DNS = 'ec2-34-205-146-231.compute-1.amazonaws.com'
-        DEPLOY_PATH = '/home/ubuntu/todo-app'
+        DEPLOY_PATH = '/home/ubuntu/todo-app/'
   }
     
     
